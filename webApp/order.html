@@ -51,64 +51,74 @@
 </div>
 
 <script>
-        let cart = [];
+    let cart = [];
 
-        function addItem() {
-            if (cart.length >= 5) {
-                alert("Вы можете добавить максимум 5 товаров.");
-                return;
-            }
-
-            const link = document.getElementById("link").value;
-            const screenshot = document.getElementById("screenshot").files[0];
-            const size = document.getElementById("size").value;
-
-            if (!link || !size) {
-                alert("Пожалуйста, заполните все поля (кроме скриншота — он по желанию).");
-                return;
-            }
-
-            cart.push({ link, screenshotName: screenshot?.name || "Без скриншота", size });
-            updateCartDisplay();
-
-            // Очистим поля после добавления
-            document.getElementById("link").value = "";
-            document.getElementById("screenshot").value = "";
-            document.getElementById("size").value = "";
+    function addItem() {
+        if (cart.length >= 5) {
+            alert("Вы можете добавить максимум 5 товаров.");
+            return;
         }
 
-        function clearCart() {
-            cart = [];
-            updateCartDisplay();
+        const link = document.getElementById("link").value;
+        const screenshot = document.getElementById("screenshot").files[0];
+        const size = document.getElementById("size").value;
+
+        if (!link || !size) {
+            alert("Пожалуйста, заполните все поля (кроме скриншота — он по желанию).");
+            return;
         }
 
-        function updateCartDisplay() {
-            document.getElementById("cartCount").innerText = cart.length;
-            const cartList = document.getElementById("cartList");
-            cartList.innerHTML = "";
+        cart.push({
+            link,
+            screenshotName: screenshot?.name || "Без скриншота",
+            size
+        });
 
-            cart.forEach((item, index) => {
-                cartList.innerHTML += `
-                    <div class="cart-item">
-                        <p><strong>Товар ${index + 1}</strong></p>
-                        <p>Ссылка: <a href="${item.link}" target="_blank">${item.link}</a></p>
-                        <p>Размер: ${item.size}</p>
-                        <p>Скриншот: ${item.screenshotName}</p>
-                    </div>
-                `;
-            });
+        updateCartDisplay();
+
+        // Очистим поля
+        document.getElementById("link").value = "";
+        document.getElementById("screenshot").value = "";
+        document.getElementById("size").value = "";
+    }
+
+    function clearCart() {
+        cart = [];
+        updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+        document.getElementById("cartCount").innerText = cart.length;
+        const cartList = document.getElementById("cartList");
+        cartList.innerHTML = "";
+
+        cart.forEach((item, index) => {
+            cartList.innerHTML += `
+                <div class="cart-item">
+                    <p><strong>Товар ${index + 1}</strong></p>
+                    <p>Ссылка: <a href="${item.link}" target="_blank">${item.link}</a></p>
+                    <p>Размер: ${item.size}</p>
+                    <p>Скриншот: ${item.screenshotName}</p>
+                </div>
+            `;
+        });
+    }
+
+    function submitOrder() {
+        if (cart.length === 0) {
+            alert("Корзина пуста!");
+            return;
         }
 
-        function submitOrder() {
-            if (cart.length === 0) {
-                alert("Корзина пуста!");
-                return;
-            }
-
-            // На этом этапе данные можно отправить в Telegram через WebApp API
-            alert("Заявка отправлена! (здесь будет отправка в Telegram)");
-            clearCart();
+        if (window.Telegram.WebApp) {
+            Telegram.WebApp.sendData(JSON.stringify({ cart }));
+            Telegram.WebApp.close(); // Закрыть WebApp после отправки
+        } else {
+            alert("Ошибка: Telegram WebApp API недоступен.");
         }
-    </script>
+    }
+</script>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>
