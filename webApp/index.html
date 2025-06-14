@@ -3,26 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Инструкция по заказу</title>
-    <style id="theme-style">
+    <style>
+        :root {
+            --bg-light: #f9f9f9;
+            --bg-dark: #1e1e1e;
+            --text-light: #333;
+            --text-dark: #f0f0f0;
+            --link-light: #1a73e8;
+            --link-dark: #8ab4f8;
+        }
+
         body {
             font-family: Arial, sans-serif;
             font-size: 18px;
             line-height: 1.6;
             padding: 20px;
-            background-color: #f9f9f9;
-            color: #333;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        a {
+            color: var(--link-light);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
         img {
             display: block;
             max-width: 100%;
             margin: 10px 0 30px;
         }
-        a {
-            color: #1a73e8;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: var(--bg-dark);
+                color: var(--text-dark);
+            }
+
+            a {
+                color: var(--link-dark);
+            }
         }
     </style>
 </head>
@@ -30,58 +54,30 @@
 
 <h2>Как оформить заказ?</h2>
 
-<p>Вы можете воспользоваться услугой <strong>«подбор товара»</strong> (<a href="#" onclick="Telegram.WebApp.openTelegramLink('https://t.me/your_bot_username')">подробнее в условиях</a>) или установить приложение:</p>
+<p>Вы можете воспользоваться услугой <strong>«подбор товара»</strong> (подробнее по кнопке <em>условия</em> в боте)</p>
 
+<p>Или выбрать товар самостоятельно (это не сложно) с помощью инструкции ниже.</p>
+
+<p>1. Установите китайскую версию POIZON:</p>
 <ul>
     <li><a href="https://apps.apple.com/cn/app/%E5%BE%97%E7%89%A9/id1012871328" target="_blank">📱 iOS – AppStore</a></li>
     <li><a href="https://apkpure.com/cn/poizon/com.shizhuang.duapp" target="_blank">🤖 Android – APK</a></li>
 </ul>
 <img src="images/step1.jpg" alt="Установка приложения">
 
-<p>Зарегистрируйтесь (это нужно, чтобы видеть актуальные цены).</p>
+<p>2. Зарегистрируйтесь (это нужно, чтобы видеть актуальные цены).</p>
 <img src="images/step2.jpg" alt="Регистрация">
 
-<p>Найдите нужный товар.</p>
+<p>3. Найдите нужный товар.</p>
 <img src="images/step3.jpg" alt="Поиск товара">
 
-<p>Выберите размер.</p>
+<p>4. Выберите размер.</p>
 <img src="images/step4.jpg" alt="Выбор размера">
 
-<p>Сделайте скрин и скопируйте ссылку на товар.</p>
+<p>5. Сделайте скрин и скопируйте ссылку на товар.</p>
 <img src="images/step5.jpg" alt="Скрин и ссылка">
 
 <p><strong>Готово!</strong> Вернитесь в бота и нажмите кнопку <em>«Сделать заказ»</em>.</p>
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.themeParams) {
-        const theme = Telegram.WebApp.themeParams;
-        const isDark = Telegram.WebApp.colorScheme === "dark";
-
-        document.getElementById('theme-style').innerHTML = `
-            body {
-                font-family: Arial, sans-serif;
-                font-size: 18px;
-                line-height: 1.6;
-                padding: 20px;
-                background-color: ${isDark ? "#121212" : "#f9f9f9"};
-                color: ${isDark ? "#e0e0e0" : "#333"};
-            }
-            img {
-                display: block;
-                max-width: 100%;
-                margin: 10px 0 30px;
-            }
-            a {
-                color: ${isDark ? "#70b8ff" : "#1a73e8"};
-                text-decoration: none;
-            }
-            a:hover {
-                text-decoration: underline;
-            }
-        `;
-    }
-</script>
 
 </body>
 </html>
