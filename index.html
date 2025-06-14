@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Инструкция по заказу</title>
-    <style>
+    <style id="theme-style">
         body {
             font-family: Arial, sans-serif;
             font-size: 18px;
@@ -30,7 +30,8 @@
 
 <h2>Как оформить заказ?</h2>
 
-<p>Установите китайскую версию POIZON:</p>
+<p>Вы можете воспользоваться услугой <strong>«подбор товара»</strong> (<a href="#" onclick="Telegram.WebApp.openTelegramLink('https://t.me/your_bot_username')">подробнее в условиях</a>) или установить приложение:</p>
+
 <ul>
     <li><a href="https://apps.apple.com/cn/app/%E5%BE%97%E7%89%A9/id1012871328" target="_blank">📱 iOS – AppStore</a></li>
     <li><a href="https://apkpure.com/cn/poizon/com.shizhuang.duapp" target="_blank">🤖 Android – APK</a></li>
@@ -50,6 +51,37 @@
 <img src="images/step5.jpg" alt="Скрин и ссылка">
 
 <p><strong>Готово!</strong> Вернитесь в бота и нажмите кнопку <em>«Сделать заказ»</em>.</p>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.themeParams) {
+        const theme = Telegram.WebApp.themeParams;
+        const isDark = Telegram.WebApp.colorScheme === "dark";
+
+        document.getElementById('theme-style').innerHTML = `
+            body {
+                font-family: Arial, sans-serif;
+                font-size: 18px;
+                line-height: 1.6;
+                padding: 20px;
+                background-color: ${isDark ? "#121212" : "#f9f9f9"};
+                color: ${isDark ? "#e0e0e0" : "#333"};
+            }
+            img {
+                display: block;
+                max-width: 100%;
+                margin: 10px 0 30px;
+            }
+            a {
+                color: ${isDark ? "#70b8ff" : "#1a73e8"};
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+        `;
+    }
+</script>
 
 </body>
 </html>
