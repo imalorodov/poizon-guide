@@ -1,33 +1,54 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Оформление заказа</title>
   <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-        }
-        input, button {
-            display: block;
-            margin: 10px 0;
-            padding: 8px;
-            width: 100%;
-        }
-        .cart {
-            margin-top: 20px;
-            border-top: 1px solid #ccc;
-            padding-top: 15px;
-        }
-        .cart-item {
-            margin-bottom: 10px;
-            border-bottom: 1px dashed #aaa;
-            padding-bottom: 10px;
-        }
-        .cart-count {
-            font-weight: bold;
-        }
-    </style>
+    :root {
+      color-scheme: light dark;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: var(--tg-theme-bg-color, #ffffff);
+      color: var(--tg-theme-text-color, #000000);
+    }
+
+    input, button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
+      color: var(--tg-theme-text-color, #000000);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: var(--tg-theme-button-color, #0088cc);
+      color: var(--tg-theme-button-text-color, #ffffff);
+    }
+
+    .cart {
+      margin-top: 20px;
+      border-top: 1px solid #888;
+      padding-top: 15px;
+    }
+
+    .cart-item {
+      margin-bottom: 10px;
+      border-bottom: 1px dashed #aaa;
+      padding-bottom: 10px;
+    }
+
+    .cart-count {
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 <h2>Добавить товар</h2>
@@ -35,18 +56,19 @@
 <label>Ссылка на товар:</label>
 <input type="url" id="link" placeholder="https://..." required>
 
-<label>Скриншот товара:</label>
-<input type="file" id="screenshot" accept="image/*">
-
 <label>Размер:</label>
-<input type="text" id="size" placeholder="Например: 42 / M">
+<input type="text" id="size" placeholder="Например: 42 / M" required>
 
 <button onclick="addItem()">➕ Добавить товар</button>
-<button onclick="clearCart()">🗑️ Очистить корзину</button>
+
+<label>Контакт для связи (телеграм, телефон, почта):</label>
+<input type="text" id="contact" placeholder="@username или номер телефона" required>
+
+<button onclick="clearCart()">🗑 Очистить корзину</button>
 <button onclick="submitOrder()">📨 Отправить заявку</button>
 
 <div class="cart">
-  <p class="cart-count">Товаров в корзине: <span id="cartCount">0</span> / 5</p>
+  <p class="cart-count">Товаров в корзине: <span id="cartCount">0</span></p>
   <div id="cartList"></div>
 </div>
 
@@ -54,70 +76,67 @@
     let cart = [];
 
     function addItem() {
-        if (cart.length >= 5) {
-            alert("Вы можете добавить максимум 5 товаров.");
-            return;
-        }
+      const link = document.getElementById("link").value.trim();
+      const size = document.getElementById("size").value.trim();
 
-        const link = document.getElementById("link").value;
-        const screenshot = document.getElementById("screenshot").files[0];
-        const size = document.getElementById("size").value;
+      if (!link || !size) {
+        alert("Пожалуйста, заполните все поля.");
+        return;
+      }
 
-        if (!link || !size) {
-            alert("Пожалуйста, заполните все поля (кроме скриншота — он по желанию).");
-            return;
-        }
+      cart.push({ link, size });
+      updateCartDisplay();
 
-        cart.push({
-            link,
-            screenshotName: screenshot?.name || "Без скриншота",
-            size
-        });
-
-        updateCartDisplay();
-
-        // Очистим поля
-        document.getElementById("link").value = "";
-        document.getElementById("screenshot").value = "";
-        document.getElementById("size").value = "";
+      document.getElementById("link").value = "";
+      document.getElementById("size").value = "";
     }
 
     function clearCart() {
-        cart = [];
-        updateCartDisplay();
+      cart = [];
+      updateCartDisplay();
     }
 
     function updateCartDisplay() {
-        document.getElementById("cartCount").innerText = cart.length;
-        const cartList = document.getElementById("cartList");
-        cartList.innerHTML = "";
+      document.getElementById("cartCount").innerText = cart.length;
+      const cartList = document.getElementById("cartList");
+      cartList.innerHTML = "";
 
-        cart.forEach((item, index) => {
-            cartList.innerHTML += `
-                <div class="cart-item">
-                    <p><strong>Товар ${index + 1}</strong></p>
-                    <p>Ссылка: <a href="${item.link}" target="_blank">${item.link}</a></p>
-                    <p>Размер: ${item.size}</p>
-                    <p>Скриншот: ${item.screenshotName}</p>
-                </div>
-            `;
-        });
+      cart.forEach((item, index) => {
+        cartList.innerHTML += `
+          <div class="cart-item">
+            <p><strong>Товар ${index + 1}</strong></p>
+            <p>Ссылка: <a href="${item.link}" target="_blank">${item.link}</a></p>
+            <p>Размер: ${item.size}</p>
+          </div>
+        `;
+      });
     }
 
     function submitOrder() {
-        if (cart.length === 0) {
-            alert("Корзина пуста!");
-            return;
-        }
+      if (cart.length === 0) {
+        alert("Корзина пуста!");
+        return;
+      }
 
-        if (window.Telegram.WebApp) {
-            Telegram.WebApp.sendData(JSON.stringify({ cart }));
-            Telegram.WebApp.close(); // Закрыть WebApp после отправки
-        } else {
-            alert("Ошибка: Telegram WebApp API недоступен.");
-        }
+      const contact = document.getElementById("contact").value.trim();
+      if (!contact) {
+        alert("Укажите способ связи с вами.");
+        return;
+      }
+
+      const payload = {
+        items: cart,
+        contact: contact
+      };
+
+      if (window.Telegram.WebApp) {
+        Telegram.WebApp.sendData(JSON.stringify(payload));
+        Telegram.WebApp.close();
+      } else {
+        alert("Ошибка: Telegram WebApp API недоступен.");
+      }
     }
-</script>
+  </script>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
