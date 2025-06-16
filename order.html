@@ -10,43 +10,71 @@
 
     body {
       font-family: Arial, sans-serif;
-      margin: 30px;
+      font-size: 18px;
+      line-height: 1.6;
+      margin: 20px;
       background-color: var(--tg-theme-bg-color, #ffffff);
       color: var(--tg-theme-text-color, #000000);
     }
 
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 16px;
+      margin-top: 15px;
+      display: block;
+    }
+
     input, button {
       display: block;
-      margin: 10px 0;
-      padding: 10px;
+      margin: 12px 0;
+      padding: 14px;
+      font-size: 16px;
       width: 100%;
       box-sizing: border-box;
       background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
       color: var(--tg-theme-text-color, #000000);
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 8px;
     }
 
     button {
       cursor: pointer;
+      font-weight: bold;
       background-color: var(--tg-theme-button-color, #0088cc);
       color: var(--tg-theme-button-text-color, #ffffff);
+      border: none;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #0077b3;
     }
 
     .cart {
-      margin-top: 20px;
-      border-top: 1px solid #888;
-      padding-top: 15px;
+      margin-top: 30px;
+      border-top: 2px solid #888;
+      padding-top: 20px;
     }
 
     .cart-item {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       border-bottom: 1px dashed #aaa;
-      padding-bottom: 10px;
+      padding-bottom: 15px;
     }
 
     .cart-count {
       font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    a {
+      word-break: break-all;
+      color: var(--tg-theme-link-color, #1a73e8);
     }
   </style>
 </head>
