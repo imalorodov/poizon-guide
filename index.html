@@ -79,16 +79,5 @@
 
 <p><strong>Готово!</strong> Вернитесь в бота и нажмите кнопку <em>«Сделать заказ»</em>.</p>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-  const tg = window.Telegram.WebApp;
-  tg.ready();
-
-  // Лог: пользователь открыл инструкцию
-  tg.sendData(JSON.stringify({
-    event: "instruction_opened"
-  }));
-</script>
-
 </body>
 </html>
