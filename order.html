@@ -7,6 +7,7 @@
     :root {
       color-scheme: light dark;
     }
+
     body {
       font-family: Arial, sans-serif;
       font-size: 18px;
@@ -15,15 +16,18 @@
       background-color: var(--tg-theme-bg-color, #ffffff);
       color: var(--tg-theme-text-color, #000000);
     }
+
     h2 {
       font-size: 24px;
       margin-bottom: 20px;
     }
+
     label {
       font-size: 16px;
       margin-top: 15px;
       display: block;
     }
+
     input, button {
       display: block;
       margin: 12px 0;
@@ -36,6 +40,7 @@
       border: 1px solid #ccc;
       border-radius: 8px;
     }
+
     button {
       cursor: pointer;
       font-weight: bold;
@@ -44,24 +49,29 @@
       border: none;
       transition: background-color 0.2s;
     }
+
     button:hover {
       background-color: #0077b3;
     }
+
     .cart {
       margin-top: 30px;
       border-top: 2px solid #888;
       padding-top: 20px;
     }
+
     .cart-item {
       margin-bottom: 20px;
       border-bottom: 1px dashed #aaa;
       padding-bottom: 15px;
     }
+
     .cart-count {
       font-weight: bold;
       font-size: 18px;
       margin-bottom: 10px;
     }
+
     a {
       word-break: break-all;
       color: var(--tg-theme-link-color, #1a73e8);
@@ -157,15 +167,5 @@
   </script>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-
-    // Лог: пользователь открыл окно оформления заказа
-    tg.sendData(JSON.stringify({
-      event: "order_opened"
-    }));
-  </script>
 </body>
 </html>
